@@ -1,15 +1,18 @@
 // Initialize Firebase
 
+//firebase url: https://console.firebase.google.com/project/rps-bfffe/database/data
 
-  // var config = {
-  //   apiKey: "AIzaSyAR7oyxi5Tqcbj_s0jOA6h9KBVZShVoiuQ",
-  //   authDomain: "rps-bfffe.firebaseapp.com",
-  //   databaseURL: "https://rps-bfffe.firebaseio.com",
-  //   storageBucket: "rps-bfffe.appspot.com",
-  //   messagingSenderId: "990246147235"
-  // };
+//see firebaselogic.js for reference
+
+  var config = {
+    apiKey: "AIzaSyAR7oyxi5Tqcbj_s0jOA6h9KBVZShVoiuQ",
+    authDomain: "rps-bfffe.firebaseapp.com",
+    databaseURL: "https://rps-bfffe.firebaseio.com",
+    storageBucket: "rps-bfffe.appspot.com",
+    messagingSenderId: "990246147235"
+  };
   
-  // firebase.initializeApp(config);
+  firebase.initializeApp(config);
 
   // const preObject = $('#playerName');
 
@@ -20,7 +23,7 @@
 
 
 
-  // var database = firebase.database();
+  var database = firebase.database();
 
   // var varsRef = database.ref('/vars').push();
 
@@ -31,7 +34,8 @@
     var losses1=0;
     var wins2=0;
     var losses2=0;
-    var names=['one'];
+    var names=[];
+    var numPlayers;
     var playerName1=names[0];
     var playerName2=names[1];
     var player1Choice;
@@ -51,19 +55,47 @@
 
     $('#start1').on('click', function(){
 
-      $('#start').hide();
-      $('#playerId').show();
-      $('#choice').show();
-      $('#choice2').show();
+      // $('#start').hide();
+      // $('#playerId').show();
+      // $('#choice').show();
+      // $('#choice2').show();
         
       if(names.length>0){
           names[1]=$('#startInput').val();
           playerName2=names[1];
+          database.ref().set({
+            player2:playerName2, 
+            player1:playerName1
+          })
+          $('#start').hide();
+          $('#playerId').show();
+          $('#choice').show();
+          $('#choice2').show();
+
       }else{
           names[0]=$('#startInput').val();
           playerName1=names[0];
+           database.ref().set({
+            player1:playerName1 
+          })
         }
     })
+// playerName1=names[0];
+//            database.ref().set({
+//             player1:playerName1 
+//           })
+
+//below: make score children of player1 or player2; see logic.js ln52
+
+    function scoreSet() {
+        database.ref().set({
+          // make wins1 losses 1 child of player1 object;
+          // same for player2
+        })
+
+    }
+
+
 
     //code below stores each user's choice in a var;
 
